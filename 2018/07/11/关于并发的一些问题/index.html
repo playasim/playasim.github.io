@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="###Lock和synchronized的区别？### 今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronize">
+<meta name="description" content="Lock和synchronized的区别今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronized：在需要同步的">
 <meta name="keywords" content="martin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lock和synchronized的区别">
 <meta property="og:url" content="http://hackerang.com/2018/07/11/关于并发的一些问题/index.html">
 <meta property="og:site_name" content="soft Nero">
-<meta property="og:description" content="###Lock和synchronized的区别？### 今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronize">
+<meta property="og:description" content="Lock和synchronized的区别今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronized：在需要同步的">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-07-12T16:13:07.993Z">
+<meta property="og:updated_time" content="2018-07-20T15:04:53.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lock和synchronized的区别">
-<meta name="twitter:description" content="###Lock和synchronized的区别？### 今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronize">
+<meta name="twitter:description" content="Lock和synchronized的区别今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。 翻阅资料后才知道大概的区别是这样的： 用法区别synchronized：在需要同步的">
 
 
 
@@ -310,8 +310,7 @@
       
 
       
-        <p>###Lock和synchronized的区别？###</p>
-<p>今天面试被问到这个问题，回答大概如下：<br>1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；<br>2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。</p>
+        <h3 id="Lock和synchronized的区别"><a href="#Lock和synchronized的区别" class="headerlink" title="Lock和synchronized的区别"></a>Lock和synchronized的区别</h3><p>今天面试被问到这个问题，回答大概如下：<br>1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；<br>2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。</p>
 <p>翻阅资料后才知道大概的区别是这样的：</p>
 <p><strong>用法区别</strong><br>synchronized：在需要同步的对象中加入此控制，synchronized可以加在方法上，也可以加在特定代码块中，括号中表示需要锁的对象。</p>
 <p>lock：需要显示指定起始位置和终止位置。一般使用ReentrantLock类做为锁，多个线程中必须要使用一个ReentrantLock类做为对象才能保证锁的生效。且在加锁和解锁处需要通过lock()和unlock()显示指出。所以一般会在finally块中写unlock()以防死锁。</p>
@@ -352,6 +351,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/20/JDKInputStream/" rel="prev" title="JDKInputStream源码解析">
+                JDKInputStream源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -403,8 +406,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -419,7 +431,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -432,7 +444,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
@@ -455,6 +467,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock和synchronized的区别"><span class="nav-number">1.</span> <span class="nav-text">Lock和synchronized的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
