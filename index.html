@@ -243,6 +243,134 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hackerang.com/2018/07/22/FileInputStream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Martin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="soft Nero">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/22/FileInputStream/" itemprop="url">FileInputStream源码解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T01:48:49+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          FileInputStreamFileInputStream可以将文件中的数据转换成流。
+UMLFileInputStream继承InputStream
+Variables12345678910111213141516/* File Descriptor - handle to the open f
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/22/FileInputStream/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://hackerang.com/2018/07/20/JDKInputStream/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -314,21 +442,15 @@
       
         
           
-            <h1 id="InputSteam"><a href="#InputSteam" class="headerlink" title="InputSteam"></a>InputSteam</h1><h2 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a>UML图</h2><p>InputSteam本身实现了Closeable接口，Closeable接口又继承了AutoCloseable接口，其中只含有一个void close()方法，用于关闭资源，并释放与其相关的所有的潜在的资源。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">InputStream</span> <span class="keyword">implements</span> <span class="title">Closeable</span> </span>&#123;</span><br><span class="line">	<span class="comment">//implementation</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="constants"><a href="#constants" class="headerlink" title="constants"></a>constants</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SKIP_BUFFER_SIZE = <span class="number">2048</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_BUFFER_SIZE = <span class="number">8192</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="read"><a href="#read" class="headerlink" title="read"></a>read</h2><p>InputStream.read;<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br></pre></td></tr></table></figure></p>
-<p>首先所有InputStream的子类在使用read方法时，都要重写它。通过注释可以知道，read返回数据的byte值（范围：0～255），如果没有接近stream结束时，会返回-1.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">byte</span> b[])</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> read(b, <span class="number">0</span>, b.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Objects.requireNonNull(b);</span><br><span class="line">        Objects.checkFromIndexSize(off, len, b.length);</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> c = read();</span><br><span class="line">        <span class="keyword">if</span> (c == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        b[off] = (<span class="keyword">byte</span>)c;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (; i &lt; len ; i++) &#123;</span><br><span class="line">                c = read();</span><br><span class="line">                <span class="keyword">if</span> (c == -<span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                b[off + i] = (<span class="keyword">byte</span>)c;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ee) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>read(byte b[], int off, int len)可以读取从off到off + len的所有数据，并且返回bytes的数量，注意方法中首先使用Objects.requireNonNull和Objects.checkFromIndexSize检查了byte[]是否为空或者越界.可以学习一波</p>
-<h2 id="readAllBytes"><a href="#readAllBytes" class="headerlink" title="readAllBytes"></a>readAllBytes</h2><p>InputStream.readAllBytes();<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">byte</span>[] readAllBytes() <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[DEFAULT_BUFFER_SIZE];</span><br><span class="line">        <span class="keyword">int</span> capacity = buf.length;</span><br><span class="line">        <span class="keyword">int</span> nread = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="comment">// read to EOF which may read more or less than initial buffer size</span></span><br><span class="line">            <span class="keyword">while</span> ((n = read(buf, nread, capacity - nread)) &gt; <span class="number">0</span>)</span><br><span class="line">                nread += n;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// if the last call to read returned -1, then we're done</span></span><br><span class="line">            <span class="keyword">if</span> (n &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// need to allocate a larger buffer</span></span><br><span class="line">            <span class="keyword">if</span> (capacity &lt;= MAX_BUFFER_SIZE - capacity) &#123;</span><br><span class="line">                capacity = capacity &lt;&lt; <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (capacity == MAX_BUFFER_SIZE)</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> OutOfMemoryError(<span class="string">"Required array size too large"</span>);</span><br><span class="line">                capacity = MAX_BUFFER_SIZE;</span><br><span class="line">            &#125;</span><br><span class="line">            buf = Arrays.copyOf(buf, capacity);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (capacity == nread) ? buf : Arrays.copyOf(buf, nread);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里首先试着读取流中的数据，如果一次读完，跳出循环，且nread一定会等于capacity；若没有，则需要进行扩容.<br>这里首先判断扩为原来两倍后是否会小于MAX Size，如果是，则capacity右移；如果不是，则将capacity直接设为MAX Size，返回最新的buf。</p>
-<h2 id="readBytes"><a href="#readBytes" class="headerlink" title="readBytes"></a>readBytes</h2><p>InputStream.readBytes(bytes[] b, int off, int len);<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">readNBytes</span><span class="params">(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Objects.requireNonNull(b);</span><br><span class="line">        Objects.checkFromIndexSize(off, len, b.length);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (n &lt; len) &#123;</span><br><span class="line">            <span class="keyword">int</span> count = read(b, off + n, len - n);</span><br><span class="line">            <span class="keyword">if</span> (count &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            n += count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">skip</span><span class="params">(<span class="keyword">long</span> n)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> remaining = n;</span><br><span class="line">        <span class="keyword">int</span> nr;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> size = (<span class="keyword">int</span>)Math.min(MAX_SKIP_BUFFER_SIZE, remaining);</span><br><span class="line">        <span class="keyword">byte</span>[] skipBuffer = <span class="keyword">new</span> <span class="keyword">byte</span>[size];</span><br><span class="line">        <span class="keyword">while</span> (remaining &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            nr = read(skipBuffer, <span class="number">0</span>, (<span class="keyword">int</span>)Math.min(size, remaining));</span><br><span class="line">            <span class="keyword">if</span> (nr &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            remaining -= nr;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> n - remaining;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>skip方法可以跳过流中n个bytes的数据，使用的方法其实是把这n个byte提前read过去。返回值是真正跳过的数量。</p>
-<h2 id="transferTo"><a href="#transferTo" class="headerlink" title="transferTo"></a>transferTo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">transferTo</span><span class="params">(OutputStream out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Objects.requireNonNull(out, <span class="string">"out"</span>);</span><br><span class="line">        <span class="keyword">long</span> transferred = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[DEFAULT_BUFFER_SIZE];</span><br><span class="line">        <span class="keyword">int</span> read;</span><br><span class="line">        <span class="keyword">while</span> ((read = <span class="keyword">this</span>.read(buffer, <span class="number">0</span>, DEFAULT_BUFFER_SIZE)) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            out.write(buffer, <span class="number">0</span>, read);</span><br><span class="line">            transferred += read;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> transferred;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>将InputStream转为OutputStream，返回值为真正转换的数量。</p>
-
-          
+          InputSteamUML图InputSteam本身实现了Closeable接口，Closeable接口又继承了AutoCloseable接口，其中只含有一个void close()方法，用于关闭资源，并释放与其相关的所有的潜在的资源。123public abstract class InputSt
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/20/JDKInputStream/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -446,16 +568,15 @@
       
         
           
-            <h3 id="Lock和synchronized的区别"><a href="#Lock和synchronized的区别" class="headerlink" title="Lock和synchronized的区别"></a>Lock和synchronized的区别</h3><p>今天面试被问到这个问题，回答大概如下：<br>1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；<br>2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后要主动释放锁。</p>
-<p>翻阅资料后才知道大概的区别是这样的：</p>
-<p><strong>用法区别</strong><br>synchronized：在需要同步的对象中加入此控制，synchronized可以加在方法上，也可以加在特定代码块中，括号中表示需要锁的对象。</p>
-<p>lock：需要显示指定起始位置和终止位置。一般使用ReentrantLock类做为锁，多个线程中必须要使用一个ReentrantLock类做为对象才能保证锁的生效。且在加锁和解锁处需要通过lock()和unlock()显示指出。所以一般会在finally块中写unlock()以防死锁。</p>
-<p><strong>synchronized和lock性能区别</strong><br>synchronized原始采用的是CPU悲观锁机制，即线程获得的是独占锁。独占锁意味着其他线程只能依靠阻塞来等待线程释放锁。而在CPU转换线程阻塞时会引起线程上下文切换，当有很多线程竞争锁的时候，会引起CPU频繁的上下文切换导致效率很低。</p>
-<p>而Lock用的是乐观锁方式。所谓乐观锁就是，每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，直到成功为止。乐观锁实现的机制就是CAS操作（Compare and Swap）。我们可以进一步研究ReentrantLock的源代码，会发现其中比较重要的获得锁的一个方法是compareAndSetState。这里其实就是调用的CPU提供的特殊指令。</p>
-<p><strong>synchronized和lock用途区别</strong><br>synchronized原语和ReentrantLock在一般情况下没有什么区别，但是在非常复杂的同步应用中，请考虑使用ReentrantLock，特别是遇到下面2种需求的时候。</p>
-<p>1.某个线程在等待一个锁的控制权的这段时间需要中断<br>2.需要分开处理一些wait-notify，ReentrantLock里面的Condition应用，能够控制notify哪个线程<br>3.具有公平锁功能，每个到来的线程都将排队等候</p>
-
-          
+          Lock和synchronized的区别今天面试被问到这个问题，回答大概如下：1.synchronize是java关键字，运行在jvm层面上，系统可以随时进行监控，在方法体走完以后释放锁；2.Lock是一个类，在保留sync的功能层面上还有更多的用法（互斥锁，读写锁，中断阻塞等功能），在方法体走完后
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/11/关于并发的一些问题/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -573,77 +694,17 @@
       
         
           
-            <h2 id="Header"><a href="#Header" class="headerlink" title="Header"></a>Header</h2><h1 id="This-is-h1-header"><a href="#This-is-h1-header" class="headerlink" title="This is h1 header"></a>This is h1 header</h1><h2 id="This-is-h2-header"><a href="#This-is-h2-header" class="headerlink" title="This is h2 header"></a>This is h2 header</h2><h3 id="This-is-h3-header"><a href="#This-is-h3-header" class="headerlink" title="This is h3 header"></a>This is h3 <em>header</em></h3><h2 id="Italics-amp-Bold"><a href="#Italics-amp-Bold" class="headerlink" title="Italics &amp; Bold"></a>Italics &amp; Bold</h2><h3 id="Italics"><a href="#Italics" class="headerlink" title="Italics"></a>Italics</h3><p><em>Writing in Markdown is not that hard!</em></p>
-<h3 id="Bold"><a href="#Bold" class="headerlink" title="Bold"></a>Bold</h3><p><strong>This is Bold</strong></p>
-<h3 id="Both-Italics-and-Bold"><a href="#Both-Italics-and-Bold" class="headerlink" title="Both Italics and Bold"></a>Both Italics and Bold</h3><p><strong><em>Both Italics and Bold</em></strong></p>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p><strong>you can add bolds and headers in the link [].</strong><br>This is my personal blog, <a href="hackerang.com"><strong>hackerang</strong></a></p>
-<h2 id="Images"><a href="#Images" class="headerlink" title="Images"></a>Images</h2><p>If you know how to create links in Markdown, you can create images, too. The syntax is nearly the same.</p>
-<p><img src="https://octodex.github.com/images/bannekat.png" alt="Benjamin Bannekat"></p>
-<h2 id="Blockquotes"><a href="#Blockquotes" class="headerlink" title="Blockquotes"></a>Blockquotes</h2><h3 id="level-1-blockquotes"><a href="#level-1-blockquotes" class="headerlink" title="level 1 blockquotes"></a>level 1 blockquotes</h3><blockquote>
-<p>“In a few moments he was barefoot, his stockings folded in his pockets and his<br>  canvas shoes dangling by their knotted laces over his shoulders and, picking a<br>  pointed salt-eaten stick out of the jetsam among the rocks, he clambered down<br>  the slope of the breakwater.”</p>
-</blockquote>
-<h4 id="level-2-blockquotes"><a href="#level-2-blockquotes" class="headerlink" title="level 2 blockquotes"></a>level 2 blockquotes</h4><blockquote>
-<blockquote>
-<p>“In a few moments he was barefoot, his stockings folded in his pockets and his<br>  canvas shoes dangling by their knotted laces over his shoulders and, picking a<br>  pointed salt-eaten stick out of the jetsam among the rocks, he clambered down<br>  the slope of the breakwater.”</p>
-</blockquote>
-</blockquote>
-<p><strong>Block quotes can contain other Markdown elements, such as italics, images, or links.</strong></p>
-<h2 id="Lists"><a href="#Lists" class="headerlink" title="Lists"></a>Lists</h2><p>the asterisk <strong>(*)</strong> must have a <strong>space</strong> after.</p>
-<ul>
-<li>Flour </li>
-<li>Cheese</li>
-<li>Tomatoes</li>
-</ul>
-<ol>
-<li>Crack three eggs over a bowl</li>
-<li>Pour a gallon of milk into the bowl</li>
-<li>Rub the salmon vigorously with butter</li>
-<li>Drop the salmon into the egg-milk bowl</li>
-</ol>
-<h3 id="Lists-with-more-depth"><a href="#Lists-with-more-depth" class="headerlink" title="Lists with more depth"></a>Lists with more depth</h3><ul>
-<li>Tintin<ul>
-<li>A reporter</li>
-<li>Has poofy orange hair</li>
-<li>Friends with the world’s most awesome dog</li>
-</ul>
-</li>
-<li>Haddock<ul>
-<li>A sea captain</li>
-<li>Has a fantastic beard</li>
-<li>Loves whiskey<ul>
-<li>Possibly also scotch?</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="A-long-text"><a href="#A-long-text" class="headerlink" title="A long text"></a>A long text</h3><ol>
-<li><p>Crack three eggs over a bowl.</p>
-<p>Now, you’re going to want to crack the eggs in such a way that you don’t make a mess.</p>
-<p>If you _do_ make a mess, use a towel to clean it up!</p>
-</li>
-<li><p>Pour a gallon of milk into the bowl.</p>
-<p>Basically, take the same guidance as above: don’t be messy, but if you are, clean it up!</p>
-</li>
-<li><p>Rub the salmon vigorously with butter.</p>
-<p>By “vigorous,” we mean a strictly vertical motion. Julia Child once quipped:</p>
-<blockquote>
-<p>Up and down and all around, that’s how butter on salmon goes.</p>
-</blockquote>
-</li>
-<li><p>Drop the salmon into the egg-milk bowl.</p>
-<p>Here are some techniques on salmon-dropping:</p>
-<ul>
-<li>Make sure no trout or children are present</li>
-<li>Use both hands</li>
-<li>Always have a towel nearby in case of messes</li>
-</ul>
-</li>
-</ol>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="string">"JavaScript syntax highlighting"</span>;</span><br><span class="line">alert(s);</span><br></pre></td></tr></table></figure>
-<h2 id="Colors"><a href="#Colors" class="headerlink" title="Colors"></a>Colors</h2><p><span style="color:red"> some <strong>This is Red Bold.</strong> text</span></p>
-
-          
+          HeaderThis is h1 headerThis is h2 headerThis is h3 headerItalics &amp; BoldItalicsWriting in Markdown is not that hard!
+BoldThis is Bold
+Both Italics 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/03/markdown-test/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -761,9 +822,16 @@
       
         
           
-            <p>Welcome to <a href="https://playasim.github.io/" target="_blank" rel="noopener">SoftNero</a>! This is my very first post.</p>
+          Welcome to SoftNero! This is my very first post.
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/02/My-new-Home/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -843,7 +911,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
